@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -9,6 +11,7 @@ namespace NoticeBoard.Models
         public Guid Id { get; set; }
         [Required]
         [MaxLength(30, ErrorMessage = "Max username length is 50!")]
+        [Remote(action: "IsUserNameInUse", controller:"Account")]
         public string Username { get; set; }
         [Required]
         [DataType(DataType.Password)]

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace NoticeBoard.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
@@ -24,7 +25,7 @@ namespace NoticeBoard.Controllers
             return View();
         }
         [HttpPost]
-        [AutoValidateAntiforgeryToken]
+        [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
@@ -52,7 +53,6 @@ namespace NoticeBoard.Controllers
         }
         [HttpPost]
         [AllowAnonymous]
-        [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
@@ -67,5 +67,19 @@ namespace NoticeBoard.Controllers
             }
             return View(model);
         }
+
+        [HttpPost]
+        [AcceptVerbs("Get", "Post")]
+        public JsonResult IsUserNameInUse(string Username)
+        {
+            //var result = await UserManager.FindByIdAsync(Username);
+            //if (result == null)
+            //{
+            //    return Json(true);
+            //}
+            return Json($"Usename `{Username}` is already in use.");
+        }
     }
+
+    
 }
