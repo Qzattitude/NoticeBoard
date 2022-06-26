@@ -9,7 +9,7 @@ namespace NoticeBoard.Models
         public int NoticeId { get; set; }
         public Notice Notice { get; set; }
         public string Username { get; set; }
-        public User User { get; set; }
+        public IdentityUser User { get; set; }
         public bool IsVisited { get; set; }
         public int ViewCount { get; set; }
 

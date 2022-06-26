@@ -18,7 +18,7 @@ namespace NoticeBoard.Controllers.Data
             builder.Entity<UserNotice>()
                 .HasOne(u => u.User)
                 .WithMany(n => n.UserNotice)
-               // .HasPrincipalKey<User>(x => x.Username)
+               //.HasPrincipalKey<User>(x => x.Username)
                 .HasForeignKey(k => k.Username);
             builder.Entity<UserNotice>()
                 .HasOne(u => u.Notice)

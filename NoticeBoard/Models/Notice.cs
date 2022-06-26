@@ -16,6 +16,7 @@ namespace NoticeBoard.Models
         [Required]
         public string Link { get; set; }
         public DateTime UploadTime { get; set; }
-        public List<UserNotice> UserNotice { get; set; }
+
+        public virtual ICollection<UserNotice> UserNotice { get; set; }
     }
 }
