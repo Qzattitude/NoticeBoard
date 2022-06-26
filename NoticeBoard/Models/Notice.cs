@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace NoticeBoard.Models
@@ -12,6 +13,7 @@ namespace NoticeBoard.Models
         [Required]
         public string Link { get; set; }
         public int ViewCount { get; set; }
-        public User User { get; set; }
+        public DateTime UploadTime { get; set; }
+        public List<User> AvaiableUser { get; set; }
     }
 }
