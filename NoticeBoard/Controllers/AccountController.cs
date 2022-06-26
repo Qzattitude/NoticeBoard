@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using NoticeBoard.Models;
 using NoticeBoard.Models.VewModel;
 using System.Threading.Tasks;
 

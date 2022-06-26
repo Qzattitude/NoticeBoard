@@ -6,17 +6,17 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NoticeBoard.Models
 {
-    public class User
+    public class User : IdentityUser
     {
-        public Guid Id { get; set; }
-        [Required]
-        [MaxLength(30, ErrorMessage = "Max username length is 50!")]
-        [Remote(action: "IsUserNameInUse", controller:"Account")]
-        public string Username { get; set; }
-        [Required]
-        [DataType(DataType.Password)]
-        [MinLength(4, ErrorMessage = "Password must be 4 characters or more!")]
-        public string Password { get; set; }
+        //[Required]
+        //[MaxLength(30, ErrorMessage = "Max username length is 50!")]
+        //[Remote(action: "IsUserNameInUse", controller: "Account")]
+        //public override string UserName { get; set; }
+
+        //[Required]
+        //[DataType(DataType.Password)]
+        //[MinLength(4, ErrorMessage = "Password must be 4 characters or more!")]
+        //public string Password { get; set; }
         public List<UserNotice> UserNotice { get; set; }
     }
 }
