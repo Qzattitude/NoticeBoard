@@ -4,6 +4,7 @@ namespace NoticeBoard.Models
 {
     public class UserNotice
     {
+        public Guid Id { get; set; }
         public Guid NoticeId { get; set; }
         public Notice Notice { get; set; }
         public Guid UserId { get; set; }
