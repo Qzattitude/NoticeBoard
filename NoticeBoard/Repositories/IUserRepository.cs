@@ -2,7 +2,7 @@
 {
     public interface IUserRepository
     {
-        public void Add(string username, );
+        public void Add(string username, string password);
         public void GetAllUser();
 
     }

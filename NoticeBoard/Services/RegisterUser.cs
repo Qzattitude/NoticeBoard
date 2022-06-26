@@ -1,6 +1,6 @@
 ﻿namespace NoticeBoard.Services
 {
-    public class RegisterUser : IUser
+    public class RegisterUser 
     {
     }
 }

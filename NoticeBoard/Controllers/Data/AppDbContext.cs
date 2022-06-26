@@ -10,7 +10,20 @@ namespace NoticeBoard.Controllers.Data
         {
 
         }
-        DbSet<User> Users { get; set; }
-        DbSet<Notice> Notices { get; set; }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.Entity<UserNotice>()
+                .HasOne(u => u.User)
+                .WithMany(n => n.UserNotice)
+                .HasForeignKey(k => k.UserId);
+            builder.Entity<UserNotice>()
+                .HasOne(u => u.Notice)
+                .WithMany(n => n.UserNotice)
+                .HasForeignKey(k => k.NoticeId);
+        }
+        DbSet<User> User { get; set; }
+        DbSet<Notice> Notice { get; set; }
+        DbSet<UserNotice> UserNotice { get; set; }
     }
 }

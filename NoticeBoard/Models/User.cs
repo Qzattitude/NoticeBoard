@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace NoticeBoard.Models
@@ -12,5 +13,6 @@ namespace NoticeBoard.Models
         [Required]
         [MinLength(4, ErrorMessage = "Password must be 4 characters or more!")]
         public string Password { get; set; }
+        public List<UserNotice> UserNotice { get; set; }
     }
 }

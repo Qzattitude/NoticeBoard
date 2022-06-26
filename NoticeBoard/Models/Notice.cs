@@ -12,8 +12,7 @@ namespace NoticeBoard.Models
         public string Name { get; set; }
         [Required]
         public string Link { get; set; }
-        public int ViewCount { get; set; }
         public DateTime UploadTime { get; set; }
-        public List<User> AvaiableUser { get; set; }
+        public List<UserNotice> UserNotice { get; set; }
     }
 }
