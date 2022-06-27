@@ -1,0 +1,163 @@
+﻿@using NoticeBoard.Models.VewModel
+@model UploadNoticeViewModel
+@{
+    ViewData["Title"] = "Upload Notice";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>UploadDashboard</h1>
+   
+
+<table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Select</th>
+                <th scope="col">UserName</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var user in User)
+            {
+                <th scope="col"> </th>
+                <th scope="col">@user.Username</th>
+            }
+        </tbody>
+    </table>
+
+
+@*
+
+<form asp-controller="Admin" asp-action="Upload" method="post">
+    <div class="form-group">
+       <label>Notice Name</label>
+       <span asp-validation-for="Name"  class="text-danger"></span>
+       <input name="" id="" type="text" class="form-control"/>
+    </div>
+</form>
+
+
+
+        <form method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label>Notice Name</label>
+                <input type="text" class="form-control" />
+                <span  class="text-danger"></span>
+            </div>
+              <div class="form-group row">
+                <label class="col-sm-2 col-form-label"></label>
+               <div class="col-sm-10">
+                        <select class="custom-select mr-sm-2">
+                            <option value="">Please Select</option>
+                        </select>
+                     <span  class="text-danger"></span>
+               </div>
+              
+            <div class="form-group" class="card-body" style="height: 20rem; overflow-y: scroll;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">UserName </th>
+                            <th scope="col">Select</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th href="" scope="col">Humpty</th>
+                            <th scope="col">Select</th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button type="submit" class="btn btn-primary">LOGIN</button>
+        </form>
+
+
+
+
+        <form enctype="multipart/form-data" asp-controller="home" asp-action="create"
+      method="post" class="mt-3">
+    <div class="form-group row">
+        <label  class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input  class="form-control" placeholder="Name">
+            <span  class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label  class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input class="form-control" placeholder="Email">
+            <span  class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <select class="custom-select mr-sm-2"
+                   >
+                <option value="">Please Select</option>
+            </select>
+            <span  class="text-danger"></span>
+        </div>
+    </div>
+
+    @*  asp-for tag helper is set to "Photo" property. "Photo" property type is IFormFile
+        so at runtime asp.net core generates file upload control (input type=file)
+    *@
+@*
+    <div class="form-group row">
+        <label  class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <div class="custom-file">
+                <input class="form-control custom-file-input">
+                <label class="custom-file-label">Choose File...</label>
+            </div>
+        </div>
+    </div>
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+    </div>
+
+    @*This script is required to display the selected file in the file upload element*@
+    
+
+
+
+
+@*
+<script src="~/Scripts/jquery-1.7.1.min.js" type="text/javascript"></script>
+<script type="text/javascript" language="javascript">
+    $(function () {
+        $("#checkAll").click(function () {
+            $("input[name='employeeIdsToDelete']").attr("checked", this.checked);
+
+            $("input[name='employeeIdsToDelete']").click(function () {
+                if ($("input[name='employeeIdsToDelete']").length == $("input[name='employeeIdsToDelete']:checked").length) {
+                    $("#checkAll").attr("checked", "checked");
+                }
+                else {
+                    $("#checkAll").removeAttr("checked");
+                }
+            });
+
+        });
+        $("#btnSubmit").click(function () {
+            var count = $("input[name='employeeIdsToDelete']:checked").length;
+            if (count == 0) {
+                alert("No rows selected to delete");
+                return false;
+            }
+            else {
+                return confirm(count + " row(s) will be deleted");
+            }
+        });
+    });    
+</script>*@

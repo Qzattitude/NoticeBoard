@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NoticeBoard.Controllers.Data;
 using NoticeBoard.Models;
-using NoticeBoard.Models.VewModel;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -32,7 +31,7 @@ namespace NoticeBoard.Controllers
             _db = db;
         }
 
-        [Authorize]
+        [Authorize(Roles ="Admin")]
         public IActionResult Index()
         {
             return View();
@@ -45,20 +44,8 @@ namespace NoticeBoard.Controllers
         //    IEnumerable<Notice> notice = _db.Notice.Where()
         //    return View();
         //}
-        [HttpGet]
-        public IActionResult AdminDashboard()
-        {
-            return View();
-        }
 
-        //[Authorize("Admin")]
-        [HttpPost]
-        public IActionResult UploadNoticeDashboard()
-        {
-            return View();
-        }
-
-
+        [Authorize(Roles ="User")]
         public IActionResult Privacy()
         {
             return View();

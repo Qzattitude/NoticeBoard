@@ -13,9 +13,9 @@ namespace NoticeBoard.Controllers.Data
 
         }
 
-        DbSet<User> User { get; set; }
-        DbSet<Notice> Notice { get; set; }
-        DbSet<UserNotice> UserNotice { get; set; }
+        public DbSet<User> User { get; set; }
+        public DbSet<Notice> Notice { get; set; }
+        public DbSet<UserNotice> UserNotice { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -39,32 +39,47 @@ namespace NoticeBoard.Controllers.Data
 
 
             const string ADMIN_ID = "a18be9c0-aa65-4af8-bd17-00bd9344e575";
-            const string ROLE_ID = ADMIN_ID;
-            builder.Entity<IdentityRole>().HasData(new IdentityRole
-            {
-                Id = ROLE_ID,
-                Name = "Admin",
-                NormalizedName = "ADMIN"
-            });
+            //const string ROLE_ID = ADMIN_ID;
+            const string USER_ID = "9E30A0BD-8810-452B-AC3C-D603F381BF15";
+            
+            builder.Entity<IdentityRole>().HasData(
+                new IdentityRole
+                {
+                   Id = ADMIN_ID,
+                   Name = "Admin",
+                   NormalizedName = "ADMIN"
+                },
+                new IdentityRole
+                {
+                    Id = USER_ID,
+                    Name = "User",
+                    NormalizedName = "USER"
+                }
+            );
 
             var hasher = new PasswordHasher<IdentityUser>();
-            builder.Entity<IdentityUser>().HasData(new IdentityUser
-            {
-                Id = ADMIN_ID,
-                UserName = "Admin@2022",
-                NormalizedUserName = "ADMIN@2022",
-                Email = "mukit@gmail.com",
-                NormalizedEmail = "mukit@gmail.com",
-                EmailConfirmed = true,
-                PasswordHash = hasher.HashPassword(null, "Mukit@2022"),
-                SecurityStamp = string.Empty
-            });
+            builder.Entity<IdentityUser>()
+                .HasData(
+                new IdentityUser
+                {
+                    Id = ADMIN_ID,
+                    UserName = "Admin@2022",
+                    NormalizedUserName = "ADMIN@2022",
+                    Email = "mukit@gmail.com",
+                    NormalizedEmail = "mukit@gmail.com",
+                    EmailConfirmed = true,
+                    PasswordHash = hasher.HashPassword(null, "Mukit@2022"),
+                    SecurityStamp = string.Empty
+                });
 
-            builder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
-            {
-                RoleId = ROLE_ID,
-                UserId = ADMIN_ID
-            });
+            builder.Entity<IdentityUserRole<string>>()
+                .HasData(
+                    new IdentityUserRole<string>
+                    {
+                        RoleId = ADMIN_ID,
+                        UserId = ADMIN_ID
+                    }
+                );
 
 
 

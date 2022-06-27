@@ -49,9 +49,16 @@ namespace NoticeBoard.Migrations
                         new
                         {
                             Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
-                            ConcurrencyStamp = "447906ba-c366-4ec0-8c74-88587ddb66be",
+                            ConcurrencyStamp = "31c12e50-f645-4a17-ae12-cad2d8c984c6",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "9E30A0BD-8810-452B-AC3C-D603F381BF15",
+                            ConcurrencyStamp = "e933db16-014f-49fc-bd7d-c92ddf80e890",
+                            Name = "User",
+                            NormalizedName = "USER"
                         });
                 });
 
@@ -154,13 +161,13 @@ namespace NoticeBoard.Migrations
                         {
                             Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8f9e48a5-cb84-48bb-b3ba-b5bd3e6b4346",
+                            ConcurrencyStamp = "915717f3-f80b-42fd-8a27-75acca7a8072",
                             Email = "mukit@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "mukit@gmail.com",
                             NormalizedUserName = "ADMIN@2022",
-                            PasswordHash = "AQAAAAEAACcQAAAAENHgCBWM0y63DB2VFBMEZIfeoluCPt3KK9EF3nuTKUcINVAouE1vD/clDka5Si909Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBavpULFt5RFxdSgQopuVRj+aAbbEWcPrcNugmOUhN9KQ3vQcqK/WiP1GYxCy9B0YQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace NoticeBoard.Migrations
 {
-    public partial class TestModels : Migration
+    public partial class UserRoleCreated : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -224,12 +224,17 @@ namespace NoticeBoard.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", "447906ba-c366-4ec0-8c74-88587ddb66be", "Admin", "ADMIN" });
+                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", "31c12e50-f645-4a17-ae12-cad2d8c984c6", "Admin", "ADMIN" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "9E30A0BD-8810-452B-AC3C-D603F381BF15", "e933db16-014f-49fc-bd7d-c92ddf80e890", "User", "USER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", 0, "8f9e48a5-cb84-48bb-b3ba-b5bd3e6b4346", "IdentityUser", "mukit@gmail.com", true, false, null, "mukit@gmail.com", "ADMIN@2022", "AQAAAAEAACcQAAAAENHgCBWM0y63DB2VFBMEZIfeoluCPt3KK9EF3nuTKUcINVAouE1vD/clDka5Si909Q==", null, false, "", false, "Admin@2022" });
+                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", 0, "915717f3-f80b-42fd-8a27-75acca7a8072", "IdentityUser", "mukit@gmail.com", true, false, null, "mukit@gmail.com", "ADMIN@2022", "AQAAAAEAACcQAAAAEBavpULFt5RFxdSgQopuVRj+aAbbEWcPrcNugmOUhN9KQ3vQcqK/WiP1GYxCy9B0YQ==", null, false, "", false, "Admin@2022" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",

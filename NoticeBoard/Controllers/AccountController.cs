@@ -36,8 +36,9 @@ namespace NoticeBoard.Controllers
                     UserName = model.Username
                 };
                 var result = await UserManager.CreateAsync(user, model.Password);
+                var result2 = await UserManager.AddToRoleAsync(user, "User");
 
-                if (result.Succeeded)
+                if (result.Succeeded && result2.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false);
                     RedirectToAction("Index", "Home");

@@ -1,15 +1,18 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace NoticeBoard.Models.VewModel
 {
     public class UploadNoticeViewModel
     {
-        public string UserName { get; set; }
-        public bool IsSelected { get; set; }
-        public Notice Notice { get; set; }
+        public string NoticeName { get; set; }
         public IFormFile File { get; set; }
         public DateTime DateTime { get; set; }
+        public List<IdentityUser> Users { get; set; }
+        public bool IsChecked { get; set; }
 
     }
 }
