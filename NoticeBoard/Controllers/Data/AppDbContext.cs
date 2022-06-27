@@ -12,20 +12,25 @@ namespace NoticeBoard.Controllers.Data
         {
 
         }
+
+        DbSet<User> User { get; set; }
+        DbSet<Notice> Notice { get; set; }
+        DbSet<UserNotice> UserNotice { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
             // builder.ApplyConfiguration(new ApplicationUserEntityConfiguration());
-            builder.Entity<UserNotice>()
-                .HasOne(u => u.User)
-                .WithMany(n => n.UserNotice)
-               //.HasPrincipalKey<User>(x => x.Username)
-                .HasForeignKey(k => k.Username);
-            builder.Entity<UserNotice>()
-                .HasOne(u => u.Notice)
-                .WithMany(n => n.UserNotice)
-               // .HasPrincipalKey<Notice>(x => x.NoticeId)
-                .HasForeignKey(k => k.NoticeId);
+            //builder.Entity<UserNotice>()
+            //    .HasOne(u => u.User)
+            //    .WithMany(n => n.UserNotice)
+            //   //.HasPrincipalKey<User>(x => x.Username)
+            //    .HasForeignKey(k => k.Username);
+            //builder.Entity<UserNotice>()
+            //    .HasOne(u => u.Notice)
+            //    .WithMany(n => n.UserNotice)
+            //   // .HasPrincipalKey<Notice>(x => x.NoticeId)
+            //    .HasForeignKey(k => k.NoticeId);
 
             //builder.Entity<IdentityRole>()
             //    .HasData(new IdentityRole 
@@ -66,9 +71,7 @@ namespace NoticeBoard.Controllers.Data
 
 
         }
-        DbSet<User> User { get; set; }
-        DbSet<Notice> Notice { get; set; }
-        DbSet<UserNotice> UserNotice { get; set; }
+        
 
 
 

@@ -17,6 +17,7 @@ namespace NoticeBoard.Models
         //[DataType(DataType.Password)]
         //[MinLength(4, ErrorMessage = "Password must be 4 characters or more!")]
         //public string Password { get; set; }
-        public virtual ICollection<UserNotice> UserNotice { get; set; }
+        public List<Notice> PostedNotice { get; set; }
+        public List<UserNotice> UserNotice { get; set; }
     }
 }
