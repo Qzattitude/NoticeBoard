@@ -11,7 +11,7 @@ namespace NoticeBoard.Models.VewModel
         public string NoticeName { get; set; }
         public IFormFile File { get; set; }
         public DateTime DateTime { get; set; }
-        public List<IdentityUser> Users { get; set; }
+        public IList<IdentityUser> Users { get; set; }  
         public bool IsChecked { get; set; }
 
     }

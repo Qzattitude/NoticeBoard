@@ -12,7 +12,7 @@ namespace NoticeBoard.Controllers
 {
     public class AdminController : Controller
     {
-        public AdminController(UserManager<IdentityUser> userManager, 
+        public AdminController(UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             AppDbContext db)
         {
@@ -30,28 +30,29 @@ namespace NoticeBoard.Controllers
         [HttpGet]
         public IActionResult Dashboard()
         {
-           // var result = await Db.Notice.FindAsync();
+            // var result = await Db.Notice.FindAsync();
             return View();
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         public async Task<IActionResult> Upload(UploadNoticeViewModel model)
         {
-            
+            model.Users = await UserManager.GetUsersInRoleAsync("User");
             return View(model);
         }
 
-        [HttpPost]
-        [Authorize(Roles = "Admin")]
-        public IActionResult Upload(UploadNoticeViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
+        //[HttpPost]
+        //[Authorize(Roles = "Admin")]
+        //public IActionResult Upload(UploadNoticeViewModel model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
 
-            }
-            // var result = await Db.User.FindAsync();
-            return View(model);
-        }
+        //    }
+        //    // var result = await Db.User.FindAsync();
+        //    return View(model);
+        //}
     }
 }

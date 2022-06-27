@@ -17,10 +17,10 @@
         </thead>
 
         <tbody>
-            @foreach (var user in User)
+            @foreach (var user in Model.Users)
             {
                 <th scope="col"> </th>
-                <th scope="col">@user.Username</th>
+                <th scope="col">@user.UserName</th>
             }
         </tbody>
     </table>
