@@ -38,16 +38,16 @@ namespace NoticeBoard.Controllers.Data
             builder.Entity<IdentityRole>().HasData(new IdentityRole
             {
                 Id = ROLE_ID,
-                Name = "admin",
-                NormalizedName = "admin"
+                Name = "Admin",
+                NormalizedName = "ADMIN"
             });
 
             var hasher = new PasswordHasher<IdentityUser>();
             builder.Entity<IdentityUser>().HasData(new IdentityUser
             {
                 Id = ADMIN_ID,
-                UserName = "admin",
-                NormalizedUserName = "admin",
+                UserName = "Admin@2022",
+                NormalizedUserName = "ADMIN@2022",
                 Email = "mukit@gmail.com",
                 NormalizedEmail = "mukit@gmail.com",
                 EmailConfirmed = true,
