@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using NoticeBoard.Models;
@@ -25,6 +26,11 @@ namespace NoticeBoard.Controllers.Data
                 .WithMany(n => n.UserNotice)
                // .HasPrincipalKey<Notice>(x => x.NoticeId)
                 .HasForeignKey(k => k.NoticeId);
+
+            builder.Entity<IdentityRole>()
+                .HasData(new IdentityRole 
+                { Name = "Admin", NormalizedName = "Admin".ToUpper() });
+            Administration.SeedUsers();
         }
         DbSet<User> User { get; set; }
         DbSet<Notice> Notice { get; set; }
