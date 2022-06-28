@@ -12,7 +12,6 @@ namespace NoticeBoard.Models
         public string UserId { get; set; }
         public string UserName { get; set; }
         public bool IsVisited { get; set; }
-        public int ViewCount { get; set; }
 
         public virtual Notice Notice { get; set; }
         public virtual IdentityUser User { get; set; }

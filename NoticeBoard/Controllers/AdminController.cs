@@ -37,6 +37,8 @@ namespace NoticeBoard.Controllers
         [AllowAnonymous]
         public IActionResult Dashboard(AdminDashboardViewModel model)
         {
+            var dbNotice = Db.Notice.AsQueryable();
+            model.Notice = dbNotice.ToList();
             return View(model);
         }
 
@@ -74,14 +76,13 @@ namespace NoticeBoard.Controllers
                 UserNotice userNotice = new UserNotice();
                 foreach (var userId in SelecteUserListId)
                 {
-                    var user = await UserManager.FindByNameAsync(userId);
+                    var user = await UserManager.FindByIdAsync(userId);
 
                     userNotice.NoticeId = newNotice.Id.ToString();
                     userNotice.NoticePath = uniqueFileName;
                     userNotice.UserId = userId;
                     userNotice.UserName = user.UserName;
                     userNotice.IsVisited = false;
-                    userNotice.ViewCount = 0;
                 }
                 await Db.UserNotice.AddAsync(userNotice);
                 await Db.SaveChangesAsync();
@@ -90,16 +91,5 @@ namespace NoticeBoard.Controllers
             return RedirectToAction("Dashboard","Admin");
         }
 
-        //[HttpPost]
-        //[Authorize(Roles = "Admin")]
-        //public IActionResult Upload(UploadNoticeViewModel model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-
-        //    }
-        //    // var result = await Db.User.FindAsync();
-        //    return View(model);
-        //}
     }
 }
