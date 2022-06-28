@@ -64,7 +64,7 @@ namespace NoticeBoard.Controllers
                     model.RememberMe, false);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");    
+                    return RedirectToAction("Index", "User");    
                 }
             }
             return View(model);

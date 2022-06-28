@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace NoticeBoard.Migrations
 {
-    public partial class AdminComplete : Migration
+    public partial class Final : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -173,10 +173,12 @@ namespace NoticeBoard.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     NoticeId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NoticeName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NoticePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsVisited = table.Column<bool>(type: "bit", nullable: false),
+                    UploadTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     NoticeId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
@@ -199,17 +201,17 @@ namespace NoticeBoard.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", "6e9a3ab8-4f79-4a61-ac0a-776fcd380981", "Admin", "ADMIN" });
+                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", "b7581584-fc92-4d25-a911-e7b56e467a9f", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "9E30A0BD-8810-452B-AC3C-D603F381BF15", "f4e24476-b92c-4cf4-abd3-4fba26f7371c", "User", "USER" });
+                values: new object[] { "9E30A0BD-8810-452B-AC3C-D603F381BF15", "3e3638a7-6ff4-4d8f-b8f2-00b188c88222", "User", "USER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", 0, "32002ac7-ae62-4a7a-bc08-1c115fe38006", "mukit@gmail.com", true, false, null, "mukit@gmail.com", "ADMIN@2022", "AQAAAAEAACcQAAAAEOK/ZJdtcaXG5ou4worTgomKMFbKwjqiaTLxcoXgRQvXHFhLP0krSWcpOgfamN1MKQ==", null, false, "", false, "Admin@2022" });
+                values: new object[] { "a18be9c0-aa65-4af8-bd17-00bd9344e575", 0, "b5900d4c-ee00-414f-947c-afdbf3fe361b", "mukit@gmail.com", true, false, null, "mukit@gmail.com", "ADMIN@2022", "AQAAAAEAACcQAAAAEDjcty4ACF+mY611lxpG2v5/OuO2yzsWaqYPxdONcwsS+SRov9YUtWfZ+Vou035HLg==", null, false, "", false, "Admin@2022" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",

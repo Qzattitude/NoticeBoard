@@ -56,18 +56,19 @@ namespace NoticeBoard.Controllers
             if (ModelState.IsValid)
             {
                 string uniqueFileName = null;
+                string FilePath = null;
                 if (model.File != null)
                 {
-                    string uploadsFolder = Path.Combine(HostingEnvironment.WebRootPath, "Notices");
+                    string uploadsFolder = Path.Combine(HostingEnvironment.WebRootPath, "Notices/");
                     uniqueFileName = Guid.NewGuid().ToString() +"_"+model.File.FileName;
-                    string FilePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    FilePath = Path.Combine(uploadsFolder, uniqueFileName);
                     model.File.CopyTo(new FileStream(FilePath, FileMode.Create));
                 }
                 Notice newNotice = new Notice()
                 {
                     Id = Guid.NewGuid(),
                     NoticeName = model.NoticeName,
-                    NoticeLink = uniqueFileName,
+                    NoticeLink = FilePath,
                     UploadTime = DateTime.UtcNow.AddHours(6)
                 };
                 await Db.Notice.AddAsync(newNotice);
@@ -79,10 +80,12 @@ namespace NoticeBoard.Controllers
                     var user = await UserManager.FindByIdAsync(userId);
 
                     userNotice.NoticeId = newNotice.Id.ToString();
+                    userNotice.NoticeName = newNotice.NoticeName;
                     userNotice.NoticePath = uniqueFileName;
                     userNotice.UserId = userId;
                     userNotice.UserName = user.UserName;
                     userNotice.IsVisited = false;
+                    userNotice.UploadTime = newNotice.UploadTime;
                 }
                 await Db.UserNotice.AddAsync(userNotice);
                 await Db.SaveChangesAsync();

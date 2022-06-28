@@ -49,14 +49,14 @@ namespace NoticeBoard.Migrations
                         new
                         {
                             Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
-                            ConcurrencyStamp = "6e9a3ab8-4f79-4a61-ac0a-776fcd380981",
+                            ConcurrencyStamp = "b7581584-fc92-4d25-a911-e7b56e467a9f",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "9E30A0BD-8810-452B-AC3C-D603F381BF15",
-                            ConcurrencyStamp = "f4e24476-b92c-4cf4-abd3-4fba26f7371c",
+                            ConcurrencyStamp = "3e3638a7-6ff4-4d8f-b8f2-00b188c88222",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -155,13 +155,13 @@ namespace NoticeBoard.Migrations
                         {
                             Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "32002ac7-ae62-4a7a-bc08-1c115fe38006",
+                            ConcurrencyStamp = "b5900d4c-ee00-414f-947c-afdbf3fe361b",
                             Email = "mukit@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "mukit@gmail.com",
                             NormalizedUserName = "ADMIN@2022",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOK/ZJdtcaXG5ou4worTgomKMFbKwjqiaTLxcoXgRQvXHFhLP0krSWcpOgfamN1MKQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDjcty4ACF+mY611lxpG2v5/OuO2yzsWaqYPxdONcwsS+SRov9YUtWfZ+Vou035HLg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -297,8 +297,14 @@ namespace NoticeBoard.Migrations
                     b.Property<Guid?>("NoticeId1")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("NoticeName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("NoticePath")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UploadTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");

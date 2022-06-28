@@ -26,9 +26,6 @@
     <Content Update="wwwroot\lib\jquery\dist\jquery.min.map">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Update="wwwroot\Notices\c80592a1-569a-4ed6-878f-d4890b54ab95_Resume - Farzin Anan Mukit -Old.pdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
 
 </Project>
