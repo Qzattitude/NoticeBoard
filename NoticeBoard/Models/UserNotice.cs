@@ -6,7 +6,6 @@ namespace NoticeBoard.Models
 {
     public class UserNotice
     {
-        [Key]
         public Guid Id { get; set; }
         public string NoticeId { get; set; }
         public string NoticePath { get; set; }

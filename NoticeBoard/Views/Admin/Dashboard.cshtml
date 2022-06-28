@@ -1,4 +1,6 @@
-﻿@{
+﻿@using NoticeBoard.Models.VewModel
+@model AdminDashboardViewModel
+@{
     ViewData["Title"] = "Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -12,7 +14,7 @@
                     <thead>
                         <tr>
                             <th scope="col">Notice </th>
-                            <th scope="col"> Total Viewed </th>
+                            <th scope="col">Total Viewed </th>
                             <th scope="col">UploadTime</th>
                         </tr>
                     </thead>

@@ -32,12 +32,12 @@ namespace NoticeBoard.Controllers
         private AppDbContext Db { get; }
         private IHostingEnvironment HostingEnvironment { get; }
 
-        [Authorize(Roles = "Admin")]
-        [HttpGet]
-        public IActionResult Dashboard()
+        //[Authorize(Roles = "Admin")]
+        //[HttpGet]
+        [AllowAnonymous]
+        public IActionResult Dashboard(AdminDashboardViewModel model)
         {
-            // var result = await Db.Notice.FindAsync();
-            return View();
+            return View(model);
         }
 
         //[Authorize(Roles = "Admin")]
@@ -49,7 +49,7 @@ namespace NoticeBoard.Controllers
             return View(model);
         }
         [HttpPost]
-        public IActionResult Upload(UploadNoticeViewModel model, IEnumerable<string>SelecteUserListId)
+        public async Task<IActionResult> Upload(UploadNoticeViewModel model, IEnumerable<string>SelecteUserListId)
         {
             if (ModelState.IsValid)
             {
@@ -63,12 +63,29 @@ namespace NoticeBoard.Controllers
                 }
                 Notice newNotice = new Notice()
                 {
+                    Id = Guid.NewGuid(),
                     NoticeName = model.NoticeName,
                     NoticeLink = uniqueFileName,
                     UploadTime = DateTime.UtcNow.AddHours(6)
                 };
-                Db.Notice.Add(newNotice);
-                Db.SaveChanges();
+                await Db.Notice.AddAsync(newNotice);
+                await Db.SaveChangesAsync();
+
+                UserNotice userNotice = new UserNotice();
+                foreach (var userId in SelecteUserListId)
+                {
+                    var user = await UserManager.FindByNameAsync(userId);
+
+                    userNotice.NoticeId = newNotice.Id.ToString();
+                    userNotice.NoticePath = uniqueFileName;
+                    userNotice.UserId = userId;
+                    userNotice.UserName = user.UserName;
+                    userNotice.IsVisited = false;
+                    userNotice.ViewCount = 0;
+                }
+                await Db.UserNotice.AddAsync(userNotice);
+                await Db.SaveChangesAsync();
+
             }
             return RedirectToAction("Dashboard","Admin");
         }
