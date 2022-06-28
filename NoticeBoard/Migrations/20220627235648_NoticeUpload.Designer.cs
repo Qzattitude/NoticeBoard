@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NoticeBoard.Controllers.Data;
 
 namespace NoticeBoard.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220627235648_NoticeUpload")]
+    partial class NoticeUpload
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,14 +51,14 @@ namespace NoticeBoard.Migrations
                         new
                         {
                             Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
-                            ConcurrencyStamp = "13e3f8fe-7b9f-4986-b2c1-11696c64303d",
+                            ConcurrencyStamp = "542b6b7e-84a1-41b8-a505-6a7ef5fad2af",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "9E30A0BD-8810-452B-AC3C-D603F381BF15",
-                            ConcurrencyStamp = "21c0f5ae-2eef-40e2-b0a6-f82836f73a1a",
+                            ConcurrencyStamp = "c53a28d6-9395-4377-ade6-673a616d420c",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -119,9 +121,6 @@ namespace NoticeBoard.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<int?>("NoticeId")
-                        .HasColumnType("int");
-
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
@@ -151,8 +150,6 @@ namespace NoticeBoard.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.HasIndex("NoticeId");
-
                     b.ToTable("AspNetUsers");
 
                     b.HasData(
@@ -160,13 +157,13 @@ namespace NoticeBoard.Migrations
                         {
                             Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ffc9e7f3-e4ca-4df2-a846-7a2c9508bc65",
+                            ConcurrencyStamp = "40d0aab3-0f71-4e07-85c9-8cdd9f1e2d46",
                             Email = "mukit@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "mukit@gmail.com",
                             NormalizedUserName = "ADMIN@2022",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMOlRosORq6kjcAyhxt/L/uiw1CncdUNcbdI3rlq6vj1IaiaETDZRptj0fijakkmsA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPhRSYSoX1AiuvRoS6NVBQLqsZ21ZmnurGoDqWU+ernQ8iNh4bmgJKYM/WBnPclRLA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -285,6 +282,40 @@ namespace NoticeBoard.Migrations
                     b.ToTable("Notice");
                 });
 
+            modelBuilder.Entity("NoticeBoard.Models.UserNotice", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("IsVisited")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("NoticeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NoticeLink")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NoticeName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ViewCount")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NoticeId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserNotice");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -292,13 +323,6 @@ namespace NoticeBoard.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
-                {
-                    b.HasOne("NoticeBoard.Models.Notice", null)
-                        .WithMany("Users")
-                        .HasForeignKey("NoticeId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -343,9 +367,21 @@ namespace NoticeBoard.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("NoticeBoard.Models.Notice", b =>
+            modelBuilder.Entity("NoticeBoard.Models.UserNotice", b =>
                 {
-                    b.Navigation("Users");
+                    b.HasOne("NoticeBoard.Models.Notice", "Notice")
+                        .WithMany()
+                        .HasForeignKey("NoticeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Notice");
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

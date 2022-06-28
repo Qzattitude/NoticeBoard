@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NoticeBoard.Controllers.Data;
 
 namespace NoticeBoard.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220627213927_RemovedUserIsChecked")]
+    partial class RemovedUserIsChecked
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,14 +51,14 @@ namespace NoticeBoard.Migrations
                         new
                         {
                             Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
-                            ConcurrencyStamp = "13e3f8fe-7b9f-4986-b2c1-11696c64303d",
+                            ConcurrencyStamp = "af99a0bd-0531-4d18-a4fd-578f0c028614",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "9E30A0BD-8810-452B-AC3C-D603F381BF15",
-                            ConcurrencyStamp = "21c0f5ae-2eef-40e2-b0a6-f82836f73a1a",
+                            ConcurrencyStamp = "ef006d2c-3741-42ae-9edd-8478ae004368",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -160,13 +162,13 @@ namespace NoticeBoard.Migrations
                         {
                             Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ffc9e7f3-e4ca-4df2-a846-7a2c9508bc65",
+                            ConcurrencyStamp = "98155bb0-7c00-498b-af23-f610fcd7b452",
                             Email = "mukit@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "mukit@gmail.com",
                             NormalizedUserName = "ADMIN@2022",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMOlRosORq6kjcAyhxt/L/uiw1CncdUNcbdI3rlq6vj1IaiaETDZRptj0fijakkmsA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENztyRWd3UM5jJSnNi92DZq2A6tHlfFdCRNOIOYDx7/9D0xLK8b066hA/PiHDgjFYQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -268,11 +270,11 @@ namespace NoticeBoard.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("NoticeLink")
+                    b.Property<string>("Link")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("NoticeName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
@@ -283,6 +285,32 @@ namespace NoticeBoard.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Notice");
+                });
+
+            modelBuilder.Entity("NoticeBoard.Models.UserNotice", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("IsVisited")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("NoticeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Username")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ViewCount")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NoticeId");
+
+                    b.ToTable("UserNotice");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -343,8 +371,21 @@ namespace NoticeBoard.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("NoticeBoard.Models.UserNotice", b =>
+                {
+                    b.HasOne("NoticeBoard.Models.Notice", "Notice")
+                        .WithMany("UserNotice")
+                        .HasForeignKey("NoticeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Notice");
+                });
+
             modelBuilder.Entity("NoticeBoard.Models.Notice", b =>
                 {
+                    b.Navigation("UserNotice");
+
                     b.Navigation("Users");
                 });
 #pragma warning restore 612, 618

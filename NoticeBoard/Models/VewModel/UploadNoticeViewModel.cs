@@ -8,11 +8,12 @@ namespace NoticeBoard.Models.VewModel
 {
     public class UploadNoticeViewModel
     {
+        [Required]
         public string NoticeName { get; set; }
+        [Required]
         public IFormFile File { get; set; }
-        public DateTime DateTime { get; set; }
-        public IList<IdentityUser> Users { get; set; }  
-        public bool IsChecked { get; set; }
+        public DateTime UploadTime { get; set; }
+        public IList<IdentityUser> Users { get; set; }
 
     }
 }

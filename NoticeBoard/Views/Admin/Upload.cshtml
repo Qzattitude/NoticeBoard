@@ -7,24 +7,41 @@
 
 <h1>UploadDashboard</h1>
    
+<form enctype="multipart/form-data" asp-action="Upload" asp-controller="Admin" method="post">
+    <div class="form-group">
+         <label>Notice Name</label>
+             <span  class="text-danger"></span>
+         <input asp-for="NoticeName" type="text" class="form-control" />
+    </div>
 
-<table class="table table-hover">
-        <thead>
-            <tr>
-                <th scope="col">Select</th>
-                <th scope="col">UserName</th>
-            </tr>
-        </thead>
+        <div class="form-group">
+           <label for="formFile" class="form-label mt-3">PDF File Only</label>
+           <input asp-for="File" class="form-control" type="file" id="formFile">
+         </div>
 
-        <tbody>
-            @foreach (var user in Model.Users)
-            {
-                <th scope="col"> </th>
-                <th scope="col">@user.UserName</th>
-            }
-        </tbody>
+    <div class="form-group">
+    <table border="1" class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Select</th>
+                    <th scope="col">UserName</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var user in Model.Users)
+                {
+                    <td scope="col">
+                        <input name="SelecteUserListId" id="SelecteUserListId" 
+                            type="checkbox" value="@user.Id"/>
+                    </td>
+                    <td scope="col">@user.UserName</td>
+                }
+            </tbody>
     </table>
-
+    </div>
+    <button type="submit" class="btn btn-primary">Upload Notice</button>
+</form>
 
 @*
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -11,12 +12,12 @@ namespace NoticeBoard.Models
 
         [Required]
         [MaxLength(150)]
-        public string Name { get; set; }
+        public string NoticeName { get; set; }
 
         [Required]
-        public string Link { get; set; }
+        public string NoticeLink { get; set; }
         public DateTime UploadTime { get; set; }
-        public List<User> Users { get; set; }   
-        public virtual List<UserNotice> UserNotice { get; set; }
+        public IList<IdentityUser> Users { get; set; }   
+        //public virtual IList<UserNotice> UserNotice { get; set; }
     }
 }

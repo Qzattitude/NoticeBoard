@@ -7,6 +7,5 @@ namespace NoticeBoard.Models.VewModel
     {
         public List<Notice> Notices { get; set; }
         public int ViewCount { get; set; }
-        public DateTime DateTime { get; set; }
     }
 }

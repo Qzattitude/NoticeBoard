@@ -13,9 +13,8 @@ namespace NoticeBoard.Controllers.Data
 
         }
 
-        public DbSet<User> User { get; set; }
+        
         public DbSet<Notice> Notice { get; set; }
-        public DbSet<UserNotice> UserNotice { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
