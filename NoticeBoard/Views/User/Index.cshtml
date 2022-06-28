@@ -1,5 +1,4 @@
 ﻿@using NoticeBoard.Models.VewModel
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 @model UserViewModel
 @{
     ViewData["Title"] = "Index";
@@ -24,24 +23,10 @@
 
                         foreach(var UserNotice in Model.UserNotice)
                         {
-                            if (!UserNotice.IsVisited)
-                            {
                                 <tr>
-                                    <td><asp:button id="isVisited"  runat="server" onserverclick="registerViewd" href="@UserNotice.NoticePath">@UserNotice.NoticeName</asp:button></td>
+                                    <td><a onclick='manageClicks("url1")' href="@Url.Content("~/Notice/"+@UserNotice.NoticePath)">@UserNotice.NoticeName</a></td>
                                     <td>@UserNotice.UploadTime</td>
                                 </tr>
-                            }
-                        }
-                        foreach(var UserNotice in Model.UserNotice)
-                        {
-                            if (!UserNotice.IsVisited)
-                            {
-                                <tr>
-                                    <td><a href="@UserNotice.NoticePath">@UserNotice.NoticeName</a></td>
-                                    <td>@UserNotice.UploadTime</td>
-                                    <td hidden>@UserNotice.IsVisited</td>
-                                </tr>
-                            }
                         }
                     }
                     </tbody>
@@ -50,3 +35,31 @@
             </div>
         </div>
 </div>
+<script>
+ function updateLinkCount(IDurl) {
+
+  //Now generate your JSON data here to be sent to th   e server
+  var json = {
+              idUrl: IDurl
+             };
+
+   //Send the JSON data via AJAX to your Controller method
+    $.ajax({
+        url: '@Url.Action("ProcessMyURLCount", "Home")',
+        type: 'post',
+        dataType: "json",
+        data: { "json": JSON.stringify(json)},
+        success: function (data) {
+                if (data.success) {
+                  console.log("Successfully incremented count");
+                 }
+                else {
+                 console.log("Could not increment count");
+                }
+        },
+        error: function (error) {
+             console.log(error)
+        }
+      });
+    });
+</script>

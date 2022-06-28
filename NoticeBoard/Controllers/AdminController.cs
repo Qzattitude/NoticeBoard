@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace NoticeBoard.Controllers
 {
     public class AdminController : Controller
@@ -31,13 +32,14 @@ namespace NoticeBoard.Controllers
         private SignInManager<IdentityUser> SignInManager { get; }
         private AppDbContext Db { get; }
         private IHostingEnvironment HostingEnvironment { get; }
+        private readonly string wwwrootDirectory =
+            Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Notice");
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public IActionResult Dashboard(AdminDashboardViewModel model)
         {
-            var dbNotice = Db.Notice.AsQueryable();
-            model.Notice = dbNotice.ToList();
+            model.Notice = Db.Notice.ToList();
             return View(model);
         }
         [HttpGet]
@@ -54,20 +56,24 @@ namespace NoticeBoard.Controllers
         {
             if (ModelState.IsValid)
             {
-                string uniqueFileName = null;
-                string FilePath = null;
-                if (model.File != null)
+                //string uniqueFileName = null;
+                string FilePath;
+                string uniqueFileName;
+                if (model.PdfFile != null)
                 {
-                    string uploadsFolder = Path.Combine(HostingEnvironment.WebRootPath, "Notice/");
-                    uniqueFileName = Guid.NewGuid().ToString() +"_"+model.File.FileName;
-                    FilePath = Path.Combine(uploadsFolder, uniqueFileName);
-                    model.File.CopyTo(new FileStream(FilePath, FileMode.Create));
+                    uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(model.PdfFile.FileName);
+                    FilePath = Path.Combine(wwwrootDirectory, uniqueFileName);
+                    using (var strem = new FileStream(FilePath, FileMode.Create))
+                    {
+                        await model.PdfFile.CopyToAsync(strem);
+                    }
                 }
+                else { return View(); }
                 Notice newNotice = new Notice()
                 {
                     Id = Guid.NewGuid(),
                     NoticeName = model.NoticeName,
-                    NoticeLink = FilePath,
+                    NoticeLink = uniqueFileName,
                     UploadTime = DateTime.UtcNow.AddHours(6)
                 };
                 await Db.Notice.AddAsync(newNotice);
@@ -92,6 +98,5 @@ namespace NoticeBoard.Controllers
             }
             return RedirectToAction("Dashboard","Admin");
         }
-
     }
 }

@@ -11,9 +11,8 @@ namespace NoticeBoard.Models.VewModel
         [Required]
         public string NoticeName { get; set; }
         [Required]
-        public IFormFile File { get; set; }
+        public IFormFile PdfFile { get; set; }
         public DateTime UploadTime { get; set; }
         public IList<IdentityUser> Users { get; set; }
-
     }
 }

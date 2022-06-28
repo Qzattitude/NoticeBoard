@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    //var filepath = "~/Notice/" + Model.Notice.NoticeLink;
 }
 
 <h1>Admin Dashboard</h1>
@@ -10,23 +11,23 @@
         <div class="card" style="min-height: 16rem; width: auto;">
             <h5 class="card-header" style="background: rgba(96,96,96,0.33)">Notice Board</h5>
             <div class="card-body" style="height: 20rem; overflow-y: scroll;">
-                <table>
+                <table border="1">
                     <thead>
                         <tr>
-                            <th scope="col">Notice Title </th>
-                            <th scope="col">Upload Time</th>
+                            <th scope="col">Title </th>
+                            <th scope="col">Time</th>
                             <th scope="col">Total VIewed</th>
                         </tr>
                     </thead>
                     <tbody>
                     @{
                         foreach(var AdminNotice in Model.Notice)
-                        {
-                        <tr>
-                            <td><a href="@AdminNotice.NoticeLink">@AdminNotice.NoticeName</a></td>
-                            <td>@AdminNotice.UploadTime</td>
-                            <td>@AdminNotice.ViewCount</td>
-                        </tr>
+                        { 
+                                    <tr>
+                                        <td><a href="@Url.Content("~/Notice/"+@AdminNotice.NoticeLink)">@AdminNotice.NoticeName</a></td>
+                                        <td>@AdminNotice.UploadTime</td>
+                                        <td>@AdminNotice.ViewCount</td>
+                                    </tr>
                         }
                     }
                     </tbody>

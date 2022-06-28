@@ -30,16 +30,16 @@ namespace NoticeBoard.Controllers
         public IActionResult Index(UserViewModel model)
         {
             var userId = UserManager.GetUserId(HttpContext.User);
-            if (userId == null)
+            if (userId != null)
             {
                 if (ModelState.IsValid)
                 {
-                    model.UserNotice = Db.UserNotice
-                        .Where(p => p.UserId.Equals(userId))
-                        .OrderByDescending(p => p.UploadTime).ThenBy(p => !p.IsVisited).ToList();
+                    model.UserNotice = Db.UserNotice.Where(p=>p.UserId.Equals(userId))
+                        .OrderByDescending(p=>p.IsVisited).ToList();
+                    return View(model);
                 }
             }
-            return View(model);
+            return RedirectToAction("Index","Home");
         }
 
         [Authorize(Roles = "User")]
