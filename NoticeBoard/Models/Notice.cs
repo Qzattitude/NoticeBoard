@@ -8,7 +8,7 @@ namespace NoticeBoard.Models
     public class Notice
     {
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
         [MaxLength(150)]
@@ -17,7 +17,6 @@ namespace NoticeBoard.Models
         [Required]
         public string NoticeLink { get; set; }
         public DateTime UploadTime { get; set; }
-        public IList<IdentityUser> Users { get; set; }   
-        //public virtual IList<UserNotice> UserNotice { get; set; }
+        public virtual ICollection<UserNotice> UserNotice { get; set; }
     }
 }

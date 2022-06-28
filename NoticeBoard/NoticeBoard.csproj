@@ -22,4 +22,10 @@
     <Folder Include="wwwroot\Notices\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="wwwroot\lib\jquery\dist\jquery.min.map">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

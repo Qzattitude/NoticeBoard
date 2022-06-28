@@ -65,8 +65,7 @@ namespace NoticeBoard.Controllers
                 {
                     NoticeName = model.NoticeName,
                     NoticeLink = uniqueFileName,
-                    UploadTime = DateTime.UtcNow.AddHours(6),
-                    //UserNotice = (IList<UserNotice>)model.Users
+                    UploadTime = DateTime.UtcNow.AddHours(6)
                 };
                 Db.Notice.Add(newNotice);
                 Db.SaveChanges();
