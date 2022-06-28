@@ -8,3 +8,45 @@
 
 <h1>Index</h1>
 
+<div class="col-md-12 ">
+        <div class="card" style="min-height: 16rem; width: auto;">
+            <h5 class="card-header" style="background: rgba(96,96,96,0.33)">Notice Board</h5>
+            <div class="card-body" style="height: 20rem; overflow-y: scroll;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Notice Title </th>
+                            <th scope="col">Upload Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @{
+
+                        foreach(var UserNotice in Model.UserNotice)
+                        {
+                            if (!UserNotice.IsVisited)
+                            {
+                                <tr>
+                                    <td><asp:button id="isVisited"  runat="server" onserverclick="registerViewd" href="@UserNotice.NoticePath">@UserNotice.NoticeName</asp:button></td>
+                                    <td>@UserNotice.UploadTime</td>
+                                </tr>
+                            }
+                        }
+                        foreach(var UserNotice in Model.UserNotice)
+                        {
+                            if (!UserNotice.IsVisited)
+                            {
+                                <tr>
+                                    <td><a href="@UserNotice.NoticePath">@UserNotice.NoticeName</a></td>
+                                    <td>@UserNotice.UploadTime</td>
+                                    <td hidden>@UserNotice.IsVisited</td>
+                                </tr>
+                            }
+                        }
+                    }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+</div>

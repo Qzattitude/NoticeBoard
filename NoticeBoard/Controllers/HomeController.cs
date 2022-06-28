@@ -31,7 +31,7 @@ namespace NoticeBoard.Controllers
             _db = db;
         }
 
-        [Authorize(Roles ="Admin")]
+        [Authorize]
         public IActionResult Index()
         {
             return View();
@@ -45,7 +45,7 @@ namespace NoticeBoard.Controllers
         //    return View();
         //}
 
-        [Authorize(Roles ="User")]
+        [Authorize]
         public IActionResult Privacy()
         {
             return View();

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NoticeBoard.Controllers.Data;
@@ -24,6 +25,8 @@ namespace NoticeBoard.Controllers
         public SignInManager<IdentityUser> SignInManager { get; }
         public AppDbContext Db { get; }
 
+        [HttpGet]
+        [Authorize(Roles ="User")]
         public IActionResult Index(UserViewModel model)
         {
             var userId = UserManager.GetUserId(HttpContext.User);
@@ -39,6 +42,7 @@ namespace NoticeBoard.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "User")]
         public PartialViewResult Refresh(UserViewModel model)
         {
             var userId = UserManager.GetUserId(HttpContext.User);

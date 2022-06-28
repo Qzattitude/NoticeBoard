@@ -32,18 +32,16 @@ namespace NoticeBoard.Controllers
         private AppDbContext Db { get; }
         private IHostingEnvironment HostingEnvironment { get; }
 
-        //[Authorize(Roles = "Admin")]
-        //[HttpGet]
-        [AllowAnonymous]
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult Dashboard(AdminDashboardViewModel model)
         {
             var dbNotice = Db.Notice.AsQueryable();
             model.Notice = dbNotice.ToList();
             return View(model);
         }
-
-        //[Authorize(Roles = "Admin")]
-        [AllowAnonymous]
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Upload()
         {
             UploadNoticeViewModel model = new UploadNoticeViewModel();
@@ -51,6 +49,7 @@ namespace NoticeBoard.Controllers
             return View(model);
         }
         [HttpPost]
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> Upload(UploadNoticeViewModel model, IEnumerable<string>SelecteUserListId)
         {
             if (ModelState.IsValid)
@@ -59,7 +58,7 @@ namespace NoticeBoard.Controllers
                 string FilePath = null;
                 if (model.File != null)
                 {
-                    string uploadsFolder = Path.Combine(HostingEnvironment.WebRootPath, "Notices/");
+                    string uploadsFolder = Path.Combine(HostingEnvironment.WebRootPath, "Notice/");
                     uniqueFileName = Guid.NewGuid().ToString() +"_"+model.File.FileName;
                     FilePath = Path.Combine(uploadsFolder, uniqueFileName);
                     model.File.CopyTo(new FileStream(FilePath, FileMode.Create));

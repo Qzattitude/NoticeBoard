@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace NoticeBoard.Controllers
 {
-    [Authorize]
     public class AccountController : Controller
     {
         public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
@@ -40,8 +39,8 @@ namespace NoticeBoard.Controllers
 
                 if (result.Succeeded && result2.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent: false);
-                    RedirectToAction("Index", "Home");
+                    await SignInManager.SignInAsync(user, isPersistent: true);
+                    return RedirectToAction("Login", "Account");
                 }
 
             }
@@ -64,23 +63,24 @@ namespace NoticeBoard.Controllers
                     model.RememberMe, false);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "User");    
+                    if (User.IsInRole("Admin")){
+                        return RedirectToAction("Dashboard", "Admin");
+                    }
+                    else if (User.IsInRole("User")){
+                        return RedirectToAction("Index", "User");
+                    }
                 }
             }
             return View(model);
         }
 
         [HttpPost]
-        [AcceptVerbs("Get", "Post")]
-        public JsonResult IsUserNameInUse(string Username)
+        public async Task<IActionResult> Logout()
         {
-            //var result = await UserManager.FindByIdAsync(Username);
-            //if (result == null)
-            //{
-            //    return Json(true);
-            //}
-            return Json($"Usename `{Username}` is already in use.");
+            await SignInManager.SignOutAsync();
+            return RedirectToAction("Login", "Account");
         }
+
     }
 
     
