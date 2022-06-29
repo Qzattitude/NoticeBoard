@@ -4,9 +4,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NoticeBoard.Controllers.Data;
 using NoticeBoard.Models.VewModel;
-using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
+
 
 namespace NoticeBoard.Controllers
 {
@@ -41,6 +40,17 @@ namespace NoticeBoard.Controllers
             }
             return RedirectToAction("Index","Home");
         }
+        public IActionResult ViewCount(string NoticeIdentify)
+        {
+            Db.UserNotice.Where(p => p.NoticeId.Equals(NoticeIdentify)).ToList().ForEach(x => x.IsVisited = true);
+            Db.SaveChanges();
+            int newCount = Db.Notice.Where(p =>p.Id.Equals(NoticeIdentify))
+                .Select(x=>x.ViewCount).FirstOrDefault();
+            newCount++;
+            Db.Notice.Where(p=>p.Id.Equals((NoticeIdentify).ToString().ToUpper())).ToList().ForEach(x=>x.ViewCount=newCount);
+            Db.SaveChanges();
+            return RedirectToAction("Index", "User");
+        }
 
         [Authorize(Roles = "User")]
         public PartialViewResult Refresh(UserViewModel model)
@@ -51,5 +61,7 @@ namespace NoticeBoard.Controllers
                         .OrderBy(p => !p.IsVisited).ToList();
             return PartialView("_UserNotice", model);
         }
+
+      
     }
 }

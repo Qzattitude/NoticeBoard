@@ -84,7 +84,7 @@ namespace NoticeBoard.Controllers
                 {
                     var user = await UserManager.FindByIdAsync(userId);
 
-                    userNotice.NoticeId = newNotice.Id.ToString();
+                    userNotice.NoticeId = newNotice.Id.ToString().ToUpper();
                     userNotice.NoticeName = newNotice.NoticeName;
                     userNotice.NoticePath = uniqueFileName;
                     userNotice.UserId = userId;

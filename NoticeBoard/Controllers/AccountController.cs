@@ -63,12 +63,7 @@ namespace NoticeBoard.Controllers
                     model.RememberMe, false);
                 if (result.Succeeded)
                 {
-                    if (User.IsInRole("Admin")){
-                        return RedirectToAction("Dashboard", "Admin");
-                    }
-                    else if (User.IsInRole("User")){
-                        return RedirectToAction("Index", "User");
-                    }
+                    return RedirectToAction("Index", "Home");
                 }
             }
             return View(model);

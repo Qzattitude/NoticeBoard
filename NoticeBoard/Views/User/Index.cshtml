@@ -24,7 +24,8 @@
                         foreach(var UserNotice in Model.UserNotice)
                         {
                                 <tr>
-                                    <td><a onclick='manageClicks("url1")' href="@Url.Content("~/Notice/"+@UserNotice.NoticePath)">@UserNotice.NoticeName</a></td>
+                                    <td><a onclick='manageClicks("url1")' href="@Url.Content("~/Notice/"+@UserNotice.NoticePath)" 
+                                    target="_blank" >@UserNotice.NoticeName</a></td>
                                     <td>@UserNotice.UploadTime</td>
                                 </tr>
                         }
@@ -36,30 +37,13 @@
         </div>
 </div>
 <script>
- function updateLinkCount(IDurl) {
+    var counter = {};
 
-  //Now generate your JSON data here to be sent to th   e server
-  var json = {
-              idUrl: IDurl
-             };
-
-   //Send the JSON data via AJAX to your Controller method
-    $.ajax({
-        url: '@Url.Action("ProcessMyURLCount", "Home")',
-        type: 'post',
-        dataType: "json",
-        data: { "json": JSON.stringify(json)},
-        success: function (data) {
-                if (data.success) {
-                  console.log("Successfully incremented count");
-                 }
-                else {
-                 console.log("Could not increment count");
-                }
-        },
-        error: function (error) {
-             console.log(error)
-        }
-      });
-    });
+    function manageClicks(url) {
+	if (! counter[url]) counter[url] = 0;
+	counter[url] ++;
+ 
+    // return location.href = url;
+	return false;
+}
 </script>
