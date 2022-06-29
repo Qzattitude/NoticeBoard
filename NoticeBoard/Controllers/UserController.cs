@@ -32,7 +32,7 @@ namespace NoticeBoard.Controllers
                 if (ModelState.IsValid)
                 {
                     model.UserNotice = Db.UserNotice.Where(p=>p.UserId.Equals(userId))
-                        .OrderByDescending(p=>p.IsVisited).ToList();
+                        .OrderByDescending(p => p.IsVisited).ThenByDescending(p =>p.UploadTime).ToList();
                     return View(model); 
                 }
             }
@@ -50,24 +50,21 @@ namespace NoticeBoard.Controllers
         //    return RedirectToAction("Index", "User");
         //}
 
-        [Authorize(Roles = "User")]
-        public PartialViewResult Refresh(UserViewModel model)
-        {
-            var userId = UserManager.GetUserId(HttpContext.User);
-            model.UserNotice = Db.UserNotice
-                        .Where(p => p.UserId.Equals(userId))
-                        .OrderBy(p => !p.IsVisited).ToList();
-            return PartialView("_UserNotice", model);
-        }
 
         [HttpPost]
         public JsonResult OnClickViewCounter(NoticeIdModel model)
         {
             var Id = model.ClickedNoticeId;
             Db.UserNotice.Where(p => p.NoticeId.Equals(Id)).ToList().ForEach(x => x.IsVisited = true);
-            Db.Notice.Where(p => p.Id.Equals((Id).ToString().ToUpper())).ToList().ForEach(x => x.ViewCount+=1);
+            //Db.Notice.Where(p => p.Id.Equals((Id).ToString().ToUpper())).ToList().ForEach(x => x.ViewCount????);
             Db.SaveChanges();
             return Json(true);
+        }
+
+        [HttpPost]
+        public IActionResult Refresh()
+        {
+            return RedirectToAction("Index", "User");
         }
 
 
