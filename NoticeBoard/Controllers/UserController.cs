@@ -42,46 +42,17 @@ namespace NoticeBoard.Controllers
             }
             return RedirectToAction("Index","Home");
         }
-        //public IActionResult ViewCount(string NoticeIdentify)
-        //{
-        //    Db.UserNotice.Where(p => p.NoticeId.Equals(NoticeIdentify)).ToList().ForEach(x => x.IsVisited = true);
-        //    Db.SaveChanges();
-        //    int newCount = Db.Notice.Where(p =>p.Id.Equals(NoticeIdentify))
-        //        .Select(x=>x.ViewCount).FirstOrDefault();
-        //    newCount++;
-        //    Db.Notice.Where(p=>p.Id.Equals((NoticeIdentify).ToString().ToUpper())).ToList().ForEach(x=>x.ViewCount=newCount);
-        //    Db.SaveChanges();
-        //    return RedirectToAction("Index", "User");
-        //}
-
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public void Edit(string id, string NoticeId)
-        {
-            if (id.ToString() != NoticeId)
-            {
-                if (ModelState.IsValid)
-                {
-                    var Notice = Db.Notice.Where(m => m.Id.ToString() == id).FirstOrDefault();
-                        Notice.ViewCount++;
-                    Db.SaveChangesAsync();
-                }
-
-            }
-        }
 
         [HttpPost]
         public JsonResult OnClickViewCounter(NoticeIdModel model)
         {
             var listId = model.ClickedNoticeId;
-            var noticeId = Db.Notice.Select(p=>p.Id).ToString();
+            var notice = Db.Notice.FirstOrDefault();
             Db.UserNotice.Where(p => p.NoticeId.Equals(listId)).ToList().ForEach(x => x.IsVisited = true);
             Db.SaveChanges();
-
-            Edit(noticeId, listId);
-
+            notice.ViewCount++;
             Db.SaveChanges();
+
             return Json(true);
         }
 
