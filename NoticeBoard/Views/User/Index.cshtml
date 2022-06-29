@@ -23,12 +23,29 @@
 
                         foreach(var UserNotice in Model.UserNotice)
                         {
-                                <tr>
-                                    <td><a onclick='manageClicks("url1")' href="@Url.Content("~/Notice/"+@UserNotice.NoticePath)" 
-                                    target="_blank" >@UserNotice.NoticeName</a></td>
-                                    <td>@UserNotice.UploadTime</td>
+                            if (!UserNotice.IsVisited)
+                            {
+                                <tr class="font-weight-bold">
+                                <td><a onClick="reply_click(this.id)" id="@UserNotice.NoticeId"  href="@Url.Content("~/Notice/"+@UserNotice.NoticePath)" 
+                                        target="_blank" >@UserNotice.NoticeName</a></td>
+                                <td>@UserNotice.UploadTime</td>
                                 </tr>
+                            }
+                            
                         }
+                        foreach(var UserNotice in Model.UserNotice)
+                        {
+                            if (UserNotice.IsVisited)
+                            {
+                                <tr>
+                                <td><a onClick="reply_click(this.id)" id="@UserNotice.NoticeId"  href="@Url.Content("~/Notice/"+@UserNotice.NoticePath)" 
+                                        target="_blank" >@UserNotice.NoticeName</a></td>
+                                <td>@UserNotice.UploadTime</td>
+                                </tr>
+                            }
+                            
+                        }
+
                     }
                     </tbody>
                 </table>
@@ -37,13 +54,23 @@
         </div>
 </div>
 <script>
-    var counter = {};
+  function reply_click(clicked_id)
+  {
+          var obj = {
+          ClickedNoticeId: clicked_id
+          }
 
-    function manageClicks(url) {
-	if (! counter[url]) counter[url] = 0;
-	counter[url] ++;
- 
-    // return location.href = url;
-	return false;
+          $.ajax({
+              url: "/User/OnClickViewCounter",
+              method: "POST",
+              dataType: "json",
+              data: obj,
+              success: function(data) {
+                  alart(data);
+              },
+              error: function(err) {
+                  console.error(log);
+              }
+          });
 }
 </script>

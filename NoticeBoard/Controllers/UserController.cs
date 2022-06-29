@@ -5,8 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using NoticeBoard.Controllers.Data;
 using NoticeBoard.Models.VewModel;
 using System.Linq;
-
-
 namespace NoticeBoard.Controllers
 {
     public class UserController : Controller
@@ -35,22 +33,22 @@ namespace NoticeBoard.Controllers
                 {
                     model.UserNotice = Db.UserNotice.Where(p=>p.UserId.Equals(userId))
                         .OrderByDescending(p=>p.IsVisited).ToList();
-                    return View(model);
+                    return View(model); 
                 }
             }
             return RedirectToAction("Index","Home");
         }
-        public IActionResult ViewCount(string NoticeIdentify)
-        {
-            Db.UserNotice.Where(p => p.NoticeId.Equals(NoticeIdentify)).ToList().ForEach(x => x.IsVisited = true);
-            Db.SaveChanges();
-            int newCount = Db.Notice.Where(p =>p.Id.Equals(NoticeIdentify))
-                .Select(x=>x.ViewCount).FirstOrDefault();
-            newCount++;
-            Db.Notice.Where(p=>p.Id.Equals((NoticeIdentify).ToString().ToUpper())).ToList().ForEach(x=>x.ViewCount=newCount);
-            Db.SaveChanges();
-            return RedirectToAction("Index", "User");
-        }
+        //public IActionResult ViewCount(string NoticeIdentify)
+        //{
+        //    Db.UserNotice.Where(p => p.NoticeId.Equals(NoticeIdentify)).ToList().ForEach(x => x.IsVisited = true);
+        //    Db.SaveChanges();
+        //    int newCount = Db.Notice.Where(p =>p.Id.Equals(NoticeIdentify))
+        //        .Select(x=>x.ViewCount).FirstOrDefault();
+        //    newCount++;
+        //    Db.Notice.Where(p=>p.Id.Equals((NoticeIdentify).ToString().ToUpper())).ToList().ForEach(x=>x.ViewCount=newCount);
+        //    Db.SaveChanges();
+        //    return RedirectToAction("Index", "User");
+        //}
 
         [Authorize(Roles = "User")]
         public PartialViewResult Refresh(UserViewModel model)
@@ -62,6 +60,16 @@ namespace NoticeBoard.Controllers
             return PartialView("_UserNotice", model);
         }
 
-      
+        [HttpPost]
+        public JsonResult OnClickViewCounter(NoticeIdModel model)
+        {
+            var Id = model.ClickedNoticeId;
+            Db.UserNotice.Where(p => p.NoticeId.Equals(Id)).ToList().ForEach(x => x.IsVisited = true);
+            Db.Notice.Where(p => p.Id.Equals((Id).ToString().ToUpper())).ToList().ForEach(x => x.ViewCount+=1);
+            Db.SaveChanges();
+            return Json(true);
+        }
+
+
     }
 }
