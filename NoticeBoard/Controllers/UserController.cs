@@ -3,8 +3,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NoticeBoard.Controllers.Data;
+using NoticeBoard.Models;
 using NoticeBoard.Models.VewModel;
+using System;
 using System.Linq;
+using System.Threading.Tasks;
+
 namespace NoticeBoard.Controllers
 {
     public class UserController : Controller
@@ -52,15 +56,31 @@ namespace NoticeBoard.Controllers
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        public void Edit(string id, string NoticeId)
+        {
+            if (id.ToString() != NoticeId)
+            {
+                if (ModelState.IsValid)
+                {
+                    var Notice = Db.Notice.Where(m => m.Id.ToString() == id).FirstOrDefault();
+                        Notice.ViewCount++;
+                    Db.SaveChangesAsync();
+                }
+
+            }
+        }
+
+        [HttpPost]
         public JsonResult OnClickViewCounter(NoticeIdModel model)
         {
             var listId = model.ClickedNoticeId;
+            var noticeId = Db.Notice.Select(p=>p.Id).ToString();
             Db.UserNotice.Where(p => p.NoticeId.Equals(listId)).ToList().ForEach(x => x.IsVisited = true);
             Db.SaveChanges();
-            int newCount = Db.Notice.Where(p => p.Id.Equals(listId))
-                .Select(x => x.ViewCount).FirstOrDefault();
-            newCount++;
-            Db.Notice.Where(p => p.Id.Equals(listId)).ToList().ForEach(x => x.ViewCount = newCount);
+
+            Edit(noticeId, listId);
+
             Db.SaveChanges();
             return Json(true);
         }
