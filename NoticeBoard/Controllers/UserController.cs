@@ -54,9 +54,13 @@ namespace NoticeBoard.Controllers
         [HttpPost]
         public JsonResult OnClickViewCounter(NoticeIdModel model)
         {
-            var Id = model.ClickedNoticeId;
-            Db.UserNotice.Where(p => p.NoticeId.Equals(Id)).ToList().ForEach(x => x.IsVisited = true);
-            //Db.Notice.Where(p => p.Id.Equals((Id).ToString().ToUpper())).ToList().ForEach(x => x.ViewCount????);
+            var listId = model.ClickedNoticeId;
+            Db.UserNotice.Where(p => p.NoticeId.Equals(listId)).ToList().ForEach(x => x.IsVisited = true);
+            Db.SaveChanges();
+            int newCount = Db.Notice.Where(p => p.Id.Equals(listId))
+                .Select(x => x.ViewCount).FirstOrDefault();
+            newCount++;
+            Db.Notice.Where(p => p.Id.Equals(listId)).ToList().ForEach(x => x.ViewCount = newCount);
             Db.SaveChanges();
             return Json(true);
         }
